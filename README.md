@@ -12,7 +12,7 @@ Extended native file system library adopted for Promise object.
 
 ## Native functions
 
-See (https://nodejs.org/dist/latest-v5.x/docs/api/fs.html)[]. All callback functions returns Promise object instead of call `callback` function.
+See https://nodejs.org/dist/latest-v5.x/docs/api/fs.html. All callback functions returns Promise object instead of call `callback` function.
 
 ## Additional functions
 
