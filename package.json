@@ -1,0 +1,43 @@
+{
+  "name": "nano-fs",
+  "version": "1.0.0",
+  "description": "Extended file system library",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha --reporter spec -u tdd",
+    "test-cov": "istanbul cover node_modules/mocha/bin/_mocha -- --reporter dot -u tdd",
+    "test-travis": "istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- --reporter dot -u tdd"
+  },
+  "dependencies": {
+  	"nano-promise": "1",
+  	"nano-promisify": "1"
+  },
+  "devDependencies": {
+    "core-assert": "0",
+    "clone": "1",
+    "nano-timer": "1",
+    "nano-json": "1",
+    "mocha": "2",
+    "colors": "0",
+    "istanbul": "0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Holixus/nano-fs.git"
+  },
+  "keywords": [
+    "file-system",
+    "mkdir",
+    "mkpath",
+    "readtree",
+    "copy",
+    "empty",
+    "remove"
+  ],
+  "author": "Vladimir Antonov <me@holix.ru>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Holixus/nano-fs/issues"
+  },
+  "homepage": "https://github.com/Holixus/nano-fs#readme"
+}
