@@ -108,6 +108,6 @@ module.exports = fs;
 
 fs.copy = fs_copy;
 fs.mkpath = fs_mkpath;
-fs.readtree = fs_readtree;
+fs.readTree = fs_readtree;
 fs.remove = fs_remove;
 fs.empty = fs_empty;

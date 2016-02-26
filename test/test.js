@@ -21,8 +21,8 @@ var join = function _join(self, obj) {
 
 suite('nano-fs', function () {
 
-	test('.readtree(dir)', function (done) {
-		fs.readtree(source_folder).then(function (list) {
+	test('.readTree(dir)', function (done) {
+		fs.readTree(source_folder).then(function (list) {
 			assert.deepStrictEqual([
 					"tet.jk",
 					"a/file.txt",
@@ -32,8 +32,8 @@ suite('nano-fs', function () {
 		}).catch(done);;
 	});
 
-	test('.readtree(dir, re)', function (done) {
-		fs.readtree(source_folder, /^a/).then(function (list) {
+	test('.readTree(dir, re)', function (done) {
+		fs.readTree(source_folder, /^a/).then(function (list) {
 			assert.deepStrictEqual([
 					"a/file.txt",
 					"a/fileaa"
@@ -100,7 +100,7 @@ suite('nano-fs', function () {
 		    to  = dest_dir+'copy.js';
 
 		fs.copy(dir, to).then(function () {
-			return fs.readtree(dest_dir).then(function (list) {
+			return fs.readTree(dest_dir).then(function (list) {
 				assert.deepStrictEqual([
 						"copy.js"
 					], list);
