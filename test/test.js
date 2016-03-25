@@ -2,7 +2,8 @@
 
 var assert = require('core-assert'),
     json = require('nano-json'),
-    timer = require('nano-timer');
+    timer = require('nano-timer'),
+    Promise = require('nano-promise');
 
 var fs = require('../index.js');
 
@@ -66,6 +67,30 @@ suite('nano-fs', function () {
 				done(Error('not maked!'));
 			});
 		}).catch(done);
+	});
+
+	test('.mkpath(dir) several times in parellel', function (done) {
+		var rem_folder = polygon_folder+'system/momo';
+		    mk_folder = polygon_folder+'system/momo/lol';
+
+		fs.remove(rem_folder)
+			.catch(function (err) {
+				if (err.code !== 'ENOENT')
+					throw err;
+			})
+			.then(function () {
+				return Promise.resolve(
+						fs.mkpath(mk_folder),
+						fs.mkpath(mk_folder)
+					);
+			})
+			.then(function () {
+				fs.stat(mk_folder).then(function (stats) {
+					if (stats.isDirectory())
+						return fs.remove(rem_folder).then(done);
+					done(Error('not maked!'));
+				});
+			}).catch(done);
 	});
 
 	test('.remove() not exist folder', function (done) {

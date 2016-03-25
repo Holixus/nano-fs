@@ -56,7 +56,11 @@ function fs_mkpath(path, mode) {
 			});
 		case 'ENOENT':
 			return fs_mkpath(Path.dirname(path), mode).then(function () {
-				return fs.mkdir(path, mode);
+				return fs.mkdir(path, mode).catch(function (err) {
+					/* istanbul ignore if */
+					if (err.code !== 'EEXIST')
+						throw err;
+				});
 			});
 		}
 		throw err;
