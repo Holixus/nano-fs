@@ -74,8 +74,9 @@ function fs_copy(src, dst) {
 				var sin = fs.createReadStream(src),
 				    sout = fs.createWriteStream(dst, { mode: stats.mode });
 				sin.pipe(sout);
-				sin.on("end", res);
 				sin.on("error", rej);
+				sin.on("end", res);
+				sout.on("error", rej);
 			});
 		});
 	});

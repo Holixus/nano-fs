@@ -1,6 +1,6 @@
 {
   "name": "nano-fs",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "Extended file system library",
   "main": "index.js",
   "scripts": {
