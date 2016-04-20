@@ -16,13 +16,13 @@ See https://nodejs.org/dist/latest-v5.x/docs/api/fs.html. All callback functions
 
 ## Additional functions
 
-### readtree(path[, regexp])
+### listFiles(path[, regexp])
 
 Resolve Promise object with `Array` of all files pathes filtered by optional RegExp.
 
 ```
 var fs = require('nano-fs');
-fs.readtree('./source').then(function (list) {
+fs.listFiles('./source').then(function (list) {
 	console.log(list);
 });
 ```
