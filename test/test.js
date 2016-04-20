@@ -29,8 +29,6 @@ suite('nano-fs', function () {
 					'file.txt': 'file',
 					fileaa: 'bbb'
 				},
-				b: {},
-				'text.ks': {},
 				'tet.jk': 'te'
 				});
 			done();
