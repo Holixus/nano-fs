@@ -132,7 +132,7 @@ function fs_writetree(root, obj) {
 
 	return fs.mkpath(root)
 		.then(function () {
-			Promise.all(
+			return Promise.all(
 				Object.keys(obj)
 					.map(function (name) {
 						return fs_writetree(Path.join(root, name), obj[name]);
