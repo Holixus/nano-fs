@@ -13,7 +13,7 @@ function errnoError(errno, syscall, text) {
 }
 
 
-function fs_readtree(folder, re) {
+function fs_listfiles(folder, re) {
 	var files = [];
 
 	function readdir(path) {
@@ -108,10 +108,45 @@ function fs_empty(path) {
 	});
 }
 
+function fs_readtree(root) {
+	return fs.lstat(root).then(function (stats) {
+		if (stats.isDirectory()) {
+			var obj = {};
+			return fs.readdir(root).then(function (list) {
+				return Promise.all(list.map(function (name) {
+					return fs_readtree(Path.join(root, name)).then(function (v) {
+						obj[name] = v;
+					})
+				})).then(function () {
+					return obj;
+				});
+			});
+		} else
+			return fs.readFile(root, 'utf8');
+	});
+}
+
+function fs_writetree(root, obj) {
+	var ps = [];
+	Object.keys(obj).forEach(function (name) {
+		var rec = obj[name],
+		    path = Path.join(root, name);
+		if (typeof rec === 'object')
+			ps.push(fs.mkdir(path).then(function () {
+				return fs_writetree(path, rec);
+			}));
+		else
+			ps.push(fs.writeFile(path, rec, 'utf8'));
+	});
+	return Promise.all(ps);
+}
+
 module.exports = fs;
 
 fs.copy = fs_copy;
 fs.mkpath = fs_mkpath;
+fs.listFiles = fs_listfiles;
 fs.readTree = fs_readtree;
+fs.writeTree = fs_writetree;
 fs.remove = fs_remove;
 fs.empty = fs_empty;

@@ -23,7 +23,22 @@ var join = function _join(self, obj) {
 suite('nano-fs', function () {
 
 	test('.readTree(dir)', function (done) {
-		fs.readTree(source_folder).then(function (list) {
+		fs.readTree(source_folder).then(function (tree) {
+			assert.deepStrictEqual(tree, {
+				a: {
+					'file.txt': 'file',
+					fileaa: 'bbb'
+				},
+				b: {},
+				'text.ks': {},
+				'tet.jk': 'te'
+				});
+			done();
+		}).catch(done);;
+	});
+
+	test('.listFiles(dir)', function (done) {
+		fs.listFiles(source_folder).then(function (list) {
 			assert.deepStrictEqual([
 					"tet.jk",
 					"a/file.txt",
@@ -33,8 +48,8 @@ suite('nano-fs', function () {
 		}).catch(done);;
 	});
 
-	test('.readTree(dir, re)', function (done) {
-		fs.readTree(source_folder, /^a/).then(function (list) {
+	test('.listFiles(dir, re)', function (done) {
+		fs.listFiles(source_folder, /^a/).then(function (list) {
 			assert.deepStrictEqual([
 					"a/file.txt",
 					"a/fileaa"
@@ -125,7 +140,7 @@ suite('nano-fs', function () {
 		    to  = dest_dir+'copy.js';
 
 		fs.copy(dir, to).then(function () {
-			return fs.readTree(dest_dir).then(function (list) {
+			return fs.listFiles(dest_dir).then(function (list) {
 				assert.deepStrictEqual([
 						"copy.js"
 					], list);
@@ -173,6 +188,30 @@ suite('nano-fs', function () {
 				assert.strictEqual(0, list.length);
 				done();
 			});
+		}).catch(done);
+	});
+
+	test('.writeTree(dir, o)', function (done) {
+		var dir = polygon_folder,
+		    tree = {
+		    	file: 'aa',
+		    	empty: {},
+		    	dir1: {
+		    		file: 'bb'
+		    	},
+		    	dir2: {
+		    		file1: 'bb',
+		    		file2: 'cc'
+		    	}
+		    };
+
+		fs.empty(dir).then(function () {
+			return fs.writeTree(dir, tree);
+		}).then(function () {
+			return fs.readTree(dir)
+		}).then(function (t) {
+			assert.deepStrictEqual(t, tree);
+			done();
 		}).catch(done);
 	});
 });
