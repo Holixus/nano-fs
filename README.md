@@ -20,7 +20,7 @@ See https://nodejs.org/dist/latest-v5.x/docs/api/fs.html. All callback functions
 
 Resolve Promise object with `Array` of all files pathes filtered by optional RegExp.
 
-```
+```js
 var fs = require('nano-fs');
 fs.listFiles('./source').then(function (list) {
 	console.log(list);
@@ -29,6 +29,33 @@ fs.listFiles('./source').then(function (list) {
 Prints something like
 ```js
 [ "tet.jk", "a/file.txt", "a/fileaa" ]
+```
+
+### writeTree(path, object)
+
+Write objects tree to file system tree.
+
+```js
+fs.writeTree('./test', {
+	folder_a: {
+		'file_a.txt': 'content',
+		'file_b.txt': 'content'
+	},
+	folder_b: {
+	},
+	'file_c.txt': 'content'
+});
+
+```
+
+### readTree(path)
+
+Resolve a Promise with objects tree where folders will be objects contains files as strings.
+
+```js
+fs.readTree(path).then(function (o) {
+	console.log(o);
+});
 ```
 
 ### mkpath(path[, mode])
