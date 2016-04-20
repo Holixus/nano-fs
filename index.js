@@ -127,18 +127,17 @@ function fs_readtree(root) {
 }
 
 function fs_writetree(root, obj) {
-	var ps = [];
-	Object.keys(obj).forEach(function (name) {
-		var rec = obj[name],
-		    path = Path.join(root, name);
-		if (typeof rec === 'object')
-			ps.push(fs.mkdir(path).then(function () {
-				return fs_writetree(path, rec);
-			}));
-		else
-			ps.push(fs.writeFile(path, rec, 'utf8'));
-	});
-	return Promise.all(ps);
+	if (typeof obj !== 'object')
+		return fs.writeFile(root, obj, 'utf8');
+
+	return fs.mkpath(root)
+		.then(function () {
+			Promise.all(
+				Object.keys(obj)
+					.map(function (name) {
+						return fs_writetree(Path.join(root, name), obj[name]);
+					}));
+		});
 }
 
 module.exports = fs;

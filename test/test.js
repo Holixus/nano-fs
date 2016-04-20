@@ -3,7 +3,8 @@
 var assert = require('core-assert'),
     json = require('nano-json'),
     timer = require('nano-timer'),
-    Promise = require('nano-promise');
+    Promise = require('nano-promise'),
+    Path = require('path');
 
 var fs = require('../index.js');
 
@@ -190,8 +191,8 @@ suite('nano-fs', function () {
 	});
 
 	test('.writeTree(dir, o)', function (done) {
-		var dir = polygon_folder,
-		    tree = {
+		var dir_a = polygon_folder,
+		    tree_a = {
 		    	file: 'aa',
 		    	empty: {},
 		    	dir1: {
@@ -201,15 +202,35 @@ suite('nano-fs', function () {
 		    		file1: 'bb',
 		    		file2: 'cc'
 		    	}
+		    },
+		    dir_b = Path.join(dir_a, 'empty/file'),
+		    tree_b = 'aa',
+		    tree = {
+		    	file: 'aa',
+		    	empty: {
+		    		file: 'aa'
+		    	},
+		    	dir1: {
+		    		file: 'bb'
+		    	},
+		    	dir2: {
+		    		file1: 'bb',
+		    		file2: 'cc'
+		    	}
 		    };
 
-		fs.empty(dir).then(function () {
-			return fs.writeTree(dir, tree);
+		fs.empty(dir_a).then(function () {
+			return fs.writeTree(dir_a, tree_a);
 		}).then(function () {
-			return fs.readTree(dir)
+			return fs.writeTree(dir_b, tree_b);
+		}).then(function () {
+			return fs.readTree(dir_a)
 		}).then(function (t) {
 			assert.deepStrictEqual(t, tree);
+			return fs.empty(dir_a);
+		}).then(function () {
 			done();
-		}).catch(done);
+		})
+		.catch(done);
 	});
 });
