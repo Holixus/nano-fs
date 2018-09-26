@@ -42,7 +42,7 @@ suite('nano-fs', function () {
 					"tet.jk",
 					"a/file.txt",
 					"a/fileaa"
-				], list);
+				].sort(), list.sort());
 			done();
 		}).catch(done);;
 	});
@@ -52,7 +52,7 @@ suite('nano-fs', function () {
 			assert.deepStrictEqual([
 					"a/file.txt",
 					"a/fileaa"
-				], list);
+				].sort(), list.sort());
 			done();
 		}).catch(done);;
 	});

@@ -9,17 +9,17 @@
     "test-travis": "istanbul cover node_modules/mocha/bin/_mocha --report lcovonly -- --reporter dot -u tdd"
   },
   "dependencies": {
-  	"nano-promise": "1",
-  	"nano-promisify": "1"
+    "nano-promise": "1",
+    "nano-promisify": "1"
   },
   "devDependencies": {
-    "core-assert": "0",
     "clone": "1",
-    "nano-timer": "1",
-    "nano-json": "1",
-    "mocha": "2",
     "colors": "0",
-    "istanbul": "0"
+    "core-assert": "0",
+    "istanbul": "0",
+    "mocha": "^5.2.0",
+    "nano-json": "1",
+    "nano-timer": "1"
   },
   "repository": {
     "type": "git",
